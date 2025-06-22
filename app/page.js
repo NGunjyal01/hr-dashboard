@@ -3,6 +3,7 @@ import { useState, useEffect, useMemo } from "react";
 import { fetchEmployees } from "@/lib/api";
 import Layout from "@/components/Layout";
 import SearchBar from "@/components/SearchBar";
+import EmployeeCard from "@/components/EmployeeCard";
 
 export default function Dashboard() {
   const [allEmployees, setAllEmployees] = useState([]);
@@ -44,6 +45,7 @@ export default function Dashboard() {
   if (error) return <Layout><div className="p-8 text-red-500">Error: {error}</div></Layout>;
 
   return (
+    
     <Layout>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
@@ -71,6 +73,12 @@ export default function Dashboard() {
           <p className="text-gray-600 dark:text-gray-400">
             Showing {filteredEmployees.length} of {allEmployees.length} employees
           </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredEmployees.map((employee) => (
+            <EmployeeCard key={employee.id} employee={employee} />
+          ))}
         </div>
 
         {filteredEmployees.length === 0 && (
