@@ -19,12 +19,17 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
+useEffect(() => {
+  if (allEmployees.length === 0) {
     fetchEmployees()
       .then((data) => setAllEmployees(data))
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
-  }, [setAllEmployees]);
+  } else {
+    setLoading(false); // Already have data
+  }
+}, [allEmployees, setAllEmployees]);
+
 
   const filteredEmployees = useMemo(() => {
     return allEmployees?.filter((employee) => {
