@@ -1,12 +1,16 @@
 "use client";
+
 import { useState, useEffect, useMemo } from "react";
 import { fetchEmployees } from "@/lib/api";
 import Layout from "@/components/Layout";
 import SearchBar from "@/components/SearchBar";
 import EmployeeCard from "@/components/EmployeeCard";
+import FilterDropdown from "@/components/FilterDropdown";
+import { employeeStore } from "@/store/employeeStore";
 
 export default function Dashboard() {
-  const [allEmployees, setAllEmployees] = useState([]);
+  const allEmployees = employeeStore((state) => state.allEmployees) || [];
+  const setAllEmployees = employeeStore((state) => state.setAllEmployees);
   const [filters, setFilters] = useState({
     search: "",
     departments: [],
@@ -20,10 +24,10 @@ export default function Dashboard() {
       .then((data) => setAllEmployees(data))
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
-  }, []);
+  }, [setAllEmployees]);
 
   const filteredEmployees = useMemo(() => {
-    return allEmployees.filter((employee) => {
+    return allEmployees?.filter((employee) => {
       const searchQuery = filters.search.toLowerCase();
       const matchSearch =
         employee.name.toLowerCase().includes(searchQuery) ||
@@ -45,7 +49,6 @@ export default function Dashboard() {
   if (error) return <Layout><div className="p-8 text-red-500">Error: {error}</div></Layout>;
 
   return (
-    
     <Layout>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
@@ -66,7 +69,24 @@ export default function Dashboard() {
               }
             />
           </div>
-
+          <div className="flex gap-3">
+            <FilterDropdown
+              title="Department"
+              options={["HR", "Engineering", "Design", "Marketing"]}
+              selected={filters.departments}
+              onChange={(departments) =>
+                setFilters((prev) => ({ ...prev, departments }))
+              }
+            />
+            <FilterDropdown
+              title="Rating"
+              options={[1, 2, 3, 4, 5]}
+              selected={filters.ratings}
+              onChange={(ratings) =>
+                setFilters((prev) => ({ ...prev, ratings }))
+              }
+            />
+          </div>
         </div>
 
         <div className="mb-6">
