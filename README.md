@@ -15,10 +15,10 @@ A modern and responsive **HR Performance Dashboard** built with **Next.js App Ro
 ![Bookmarks Dark](./screenshots/bookmarks-dark.png)
 
 ### 📊 Analytics Page
-![Analytics](./screenshots/analytics.png)
+![Analytics](./screenshots/analytics-dark.png)
 
 ### 👤 Employee Details
-![Employee Details](./screenshots/employee-details.png)
+![Employee Details](./screenshots/employee-details-light.png)
 
 > Save images in a `/screenshots` folder with filenames as shown above.
 
