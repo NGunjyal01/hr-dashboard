@@ -21,11 +21,11 @@ import {
 } from "recharts";
 import { TrendingUp, Users, Star, Award } from "lucide-react";
 import { employeeStore } from "@/store/employeeStore";
-import { useBookmarks } from "@/hooks/useBookmarks";
+import { useBookmarkStore } from "@/store/bookmarkStore";
 
 const Analytics = () => {
   const { allEmployees } = employeeStore();
-  const { bookmarks } = useBookmarks();
+  const { bookmarks } = useBookmarkStore();
 
   const departments = ["HR", "Engineering", "Design", "Marketing"];
 

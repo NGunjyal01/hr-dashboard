@@ -11,6 +11,7 @@ import { employeeStore } from "@/store/employeeStore";
 export default function Dashboard() {
   const allEmployees = employeeStore((state) => state.allEmployees) || [];
   const setAllEmployees = employeeStore((state) => state.setAllEmployees);
+  const isHydrated = employeeStore((state) => state.isHydrated);
   const [filters, setFilters] = useState({
     search: "",
     departments: [],
@@ -19,16 +20,18 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-useEffect(() => {
-  if (allEmployees.length === 0) {
-    fetchEmployees()
-      .then((data) => setAllEmployees(data))
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false));
-  } else {
-    setLoading(false); // Already have data
-  }
-}, [allEmployees, setAllEmployees]);
+  useEffect(() => {
+    if (!isHydrated) return; // Wait for Zustand to hydrate localStorage
+
+    if (allEmployees.length === 0) {
+      fetchEmployees()
+        .then((data) => setAllEmployees(data))
+        .catch((err) => setError(err.message))
+        .finally(() => setLoading(false));
+    } else {
+      setLoading(false);
+    }
+  }, [isHydrated, allEmployees, setAllEmployees]);
 
 
   const filteredEmployees = useMemo(() => {
@@ -50,8 +53,23 @@ useEffect(() => {
     });
   }, [allEmployees, filters]);
 
-  if (loading) return <Layout><div className="p-8">Loading...</div></Layout>;
-  if (error) return <Layout><div className="p-8 text-red-500">Error: {error}</div></Layout>;
+  if (!isHydrated || loading)
+    return (
+      <Layout>
+        <div className="min-h-[70vh] flex items-center justify-center">
+          <p className="text-lg text-gray-700 dark:text-gray-300">Loading...</p>
+        </div>
+      </Layout>
+    );
+
+  if (error)
+    return (
+      <Layout>
+        <div className="min-h-[70vh] flex items-center justify-center">
+          <p className="text-lg text-red-500">Error: {error}</p>
+        </div>
+      </Layout>
+    );
 
   return (
     <Layout>

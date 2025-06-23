@@ -4,11 +4,12 @@ import Link from "next/link";
 import { BookmarkIcon, Star, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { useBookmarks } from "@/hooks/useBookmarks";
 import { toast } from "@/hooks/use-toast";
+import { useBookmarkStore } from "@/store/bookmarkStore";
 
 const EmployeeCard = ({ employee }) => {
-  const { bookmarks, toggleBookmark } = useBookmarks();
+  const bookmarks = useBookmarkStore((state) => state.bookmarks);
+  const toggleBookmark = useBookmarkStore((state) => state.toggleBookmark);
   const isBookmarked = bookmarks.includes(employee.id);
 
   const handleBookmark = (e) => {
@@ -62,7 +63,7 @@ const EmployeeCard = ({ employee }) => {
             variant="ghost"
             size="sm"
             onClick={handleBookmark}
-            className={`${
+            className={`cursor-pointer ${
               isBookmarked
                 ? "text-blue-600 dark:text-blue-400"
                 : "text-gray-400 hover:text-blue-600 dark:hover:text-blue-400"
@@ -95,16 +96,17 @@ const EmployeeCard = ({ employee }) => {
         </div>
 
         <div className="flex space-x-2 pt-4">
-          <Link href={`/employee/${employee.id}`} className="flex-1">
-            <Button variant="outline" size="sm" className="w-full">
+          <Button asChild variant="outline" size="sm" className="flex-1">
+            <Link href={`/employee/${employee.id}`}>
               View Details
-            </Button>
-          </Link>
+            </Link>
+          </Button>
+          
           <Button
             variant="outline"
             size="sm"
             onClick={handlePromote}
-            className="text-green-600 hover:text-green-700 hover:bg-green-50 dark:text-green-400 dark:hover:text-green-300 dark:hover:bg-green-900/20"
+            className="cursor-pointer text-green-600 hover:text-green-700 hover:bg-green-50 dark:text-green-400 dark:hover:text-green-300 dark:hover:bg-green-900/20"
           >
             <TrendingUp className="w-4 h-4" />
           </Button>

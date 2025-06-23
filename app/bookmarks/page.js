@@ -1,15 +1,14 @@
 "use client";
-
-import { useBookmarks } from "@/hooks/useBookmarks";
 import Layout from "@/components/Layout";
 import EmployeeCard from "@/components/EmployeeCard";
 import { employeeStore } from "@/store/employeeStore";
 import { Card, CardContent } from "@/components/ui/card";
 import { BookmarkIcon } from "lucide-react";
+import { useBookmarkStore } from "@/store/bookmarkStore";
 
 const Bookmarks = () => {
-    const { bookmarks } = useBookmarks();
     const allEmployees = employeeStore((state) => state.allEmployees);
+    const bookmarks = useBookmarkStore((state) => state.bookmarks);
 
     // Filter bookmarked employees from the global employee store
     const bookmarkedEmployees = allEmployees.filter((employee) =>

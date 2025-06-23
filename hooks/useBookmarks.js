@@ -17,12 +17,14 @@ export const useBookmarks = () => {
   }, []);
 
   const toggleBookmark = (employeeId) => {
-    const updated = bookmarks.includes(employeeId)
-      ? bookmarks.filter((id) => id !== employeeId)
-      : [...bookmarks, employeeId];
+    setBookmarks((prev) => {
+      const updated = prev.includes(employeeId)
+        ? prev.filter((id) => id !== employeeId)
+        : [...prev, employeeId];
 
-    setBookmarks(updated);
-    localStorage.setItem("hr-bookmarks", JSON.stringify(updated));
+      localStorage.setItem("hr-bookmarks", JSON.stringify(updated));
+      return updated;
+    });
   };
 
   return { bookmarks, toggleBookmark };
