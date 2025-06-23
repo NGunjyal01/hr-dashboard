@@ -41,7 +41,6 @@ const EmployeeDetails = () => {
         </div>
     );
     }
-
     const renderStars = (rating, interactive = false) => {
     return Array.from({ length: 5 }, (_, i) => (
         <Star
@@ -107,7 +106,7 @@ const EmployeeDetails = () => {
           <CardContent className="p-8">
             <div className="flex flex-col md:flex-row items-start gap-6">
               <img
-                src={employee.picture}
+                src={employee.image}
                 alt={employee.name}
                 className="w-24 h-24 rounded-full object-cover ring-4 ring-gray-200 dark:ring-gray-700"
               />

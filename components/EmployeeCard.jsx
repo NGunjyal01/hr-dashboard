@@ -54,7 +54,7 @@ const EmployeeCard = ({ employee }) => {
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center space-x-3">
             <img
-              src={employee.picture}
+              src={employee.image}
               alt={employee.name}
               className="w-12 h-12 rounded-full object-cover ring-2 ring-gray-200 dark:ring-gray-700"
             />

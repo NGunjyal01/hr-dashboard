@@ -22,7 +22,7 @@ const FilterDropdown = ({ title, options, selected, onChange }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="bg-white dark:bg-gray-800">
+        <Button variant="outline" className="cursor-pointer bg-white dark:bg-gray-800">
           {title}
           {selected.length > 0 && (
             <span className="ml-2 bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300 px-2 py-0.5 rounded-full text-xs">
@@ -40,6 +40,7 @@ const FilterDropdown = ({ title, options, selected, onChange }) => {
                 id={`${title}-${option}`}
                 checked={selected.includes(option)}
                 onCheckedChange={() => handleToggle(option)}
+                className={'cursor-pointer'}
               />
               <label
                 htmlFor={`${title}-${option}`}
