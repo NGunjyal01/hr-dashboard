@@ -30,7 +30,6 @@ const EmployeeDetails = () => {
     }
 
     const employee = allEmployees.find((emp) => String(emp.id) === String(id));
-    console.log(employee)
     if (!employee) {
     return (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center">
