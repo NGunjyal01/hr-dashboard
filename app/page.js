@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { fetchEmployees } from "@/lib/api";
-import Layout from "@/components/Layout";
 import SearchBar from "@/components/SearchBar";
 import EmployeeCard from "@/components/EmployeeCard";
 import FilterDropdown from "@/components/FilterDropdown";
@@ -55,24 +54,19 @@ export default function Dashboard() {
 
   if (!isHydrated || loading)
     return (
-      <Layout>
-        <div className="min-h-[70vh] flex items-center justify-center">
-          <p className="text-lg text-gray-700 dark:text-gray-300">Loading...</p>
-        </div>
-      </Layout>
+      <div className="min-h-[70vh] flex items-center justify-center">
+        <p className="text-lg text-gray-700 dark:text-gray-300">Loading...</p>
+      </div>
     );
 
   if (error)
     return (
-      <Layout>
-        <div className="min-h-[70vh] flex items-center justify-center">
-          <p className="text-lg text-red-500">Error: {error}</p>
-        </div>
-      </Layout>
+      <div className="min-h-[70vh] flex items-center justify-center">
+        <p className="text-lg text-red-500">Error: {error}</p>
+      </div>
     );
 
   return (
-    <Layout>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
@@ -135,6 +129,5 @@ export default function Dashboard() {
           </div>
         )}
       </div>
-    </Layout>
   );
 }

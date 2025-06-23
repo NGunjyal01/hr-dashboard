@@ -4,8 +4,8 @@ import Link from "next/link";
 import { BookmarkIcon, Star, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { toast } from "@/hooks/use-toast";
 import { useBookmarkStore } from "@/store/bookmarkStore";
+import { toast } from "sonner";
 
 const EmployeeCard = ({ employee }) => {
   const bookmarks = useBookmarkStore((state) => state.bookmarks);
@@ -16,17 +16,23 @@ const EmployeeCard = ({ employee }) => {
     e.preventDefault();
     e.stopPropagation();
     toggleBookmark(employee.id);
-    toast({
-      title: isBookmarked ? "Bookmark removed" : "Employee bookmarked",
-      description: `${employee.name} ${isBookmarked ? "removed from" : "added to"} bookmarks`,
-    });
+
+    if (isBookmarked) {
+      toast.error("Bookmark removed", {
+        description: `${employee.name} removed from bookmarks`,
+      });
+    } else {
+      toast.success("Employee bookmarked", {
+        description: `${employee.name} added to bookmarks`,
+      });
+    }
   };
 
   const handlePromote = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    toast({
-      title: "Promotion initiated",
+
+    toast.success("Promotion initiated", {
       description: `${employee.name} has been flagged for promotion review`,
     });
   };

@@ -2,14 +2,13 @@
 
 import React, { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowLeft, Star, MapPin, Phone, Mail, Calendar } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { employeeStore } from "@/store/employeeStore";
 import { nanoid } from "nanoid";
 
@@ -24,11 +23,9 @@ const EmployeeDetails = () => {
 
     if (!allEmployees || allEmployees.length === 0) {
         return (
-        <Layout>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center">
             <p className="text-gray-600 dark:text-gray-400">Loading employee details...</p>
             </div>
-        </Layout>
         );
     }
 
@@ -36,7 +33,6 @@ const EmployeeDetails = () => {
     console.log(employee)
     if (!employee) {
     return (
-        <Layout>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center">
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Employee not found</h1>
             <Button onClick={() => router.push("/")} className="mt-4">
@@ -44,7 +40,6 @@ const EmployeeDetails = () => {
             Back to Dashboard
             </Button>
         </div>
-        </Layout>
     );
     }
 
@@ -64,10 +59,8 @@ const EmployeeDetails = () => {
 
   const handleSubmitFeedback = () => {
     if (!newFeedback.trim()) {
-      toast({
-        title: "Error",
-        description: "Please enter feedback before submitting",
-        variant: "destructive",
+      toast.error("Please enter feedback before submitting", {
+        description: "Feedback is required to submit.",
       });
       return;
     }
@@ -82,14 +75,14 @@ const EmployeeDetails = () => {
 
     updateEmployeeFeedback(employee.id, feedbackEntry);
 
-    toast({
-      title: "Feedback submitted",
+    toast.success("Feedback submitted", {
       description: "Your feedback has been added successfully",
     });
 
     setNewFeedback("");
     setNewRating(5);
   };
+
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -105,7 +98,6 @@ const EmployeeDetails = () => {
   };
 
   return (
-    <Layout>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Button variant="ghost" onClick={() => router.push("/")} className="cursor-pointer mb-6">
           <ArrowLeft className="w-4 h-4 mr-2" />
@@ -270,7 +262,6 @@ const EmployeeDetails = () => {
             </TabsContent>
         </Tabs>
       </div>
-    </Layout>
   );
 };
 
